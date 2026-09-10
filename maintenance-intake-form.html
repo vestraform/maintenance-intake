@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Property Maintenance Request | Intake Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark: #1a0f08;
+    --chocolate: #3d1f0d;
+    --mid: #6b3a1f;
+    --warm: #8b4a24;
+    --caramel: #c07840;
+    --cream: #f5ede3;
+    --light-cream: #faf5ef;
+    --tan: #e8d5c0;
+    --gold: #c9954a;
+    --text-main: #f0e6d8;
+    --text-muted: #c4aa90;
+    --border: rgba(201,149,74,0.25);
+    --border-focus: rgba(201,149,74,0.7);
+    --error: #e05c3a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--dark);
+    color: var(--text-main);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(107,58,31,0.4) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, rgba(61,31,13,0.6) 0%, transparent 50%);
+  }
+
+  /* HEADER */
+  .site-header {
+    background: var(--chocolate);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    backdrop-filter: blur(8px);
+  }
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .logo span { color: var(--text-muted); font-weight: 400; font-size: 1.1rem; }
+  .header-badge {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.8rem;
+    border-radius: 2px;
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+    position: relative;
+  }
+  .hero::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 2rem auto 0;
+  }
+  .hero-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    opacity: 0.9;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--cream);
+    margin-bottom: 1rem;
+  }
+  .hero p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* NOTICE BOX */
+  .notice {
+    max-width: 780px;
+    margin: 0 auto 2.5rem;
+    padding: 0 1.5rem;
+  }
+  .notice-box {
+    background: rgba(201,149,74,0.08);
+    border: 1px solid rgba(201,149,74,0.3);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 1.1rem 1.4rem;
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .notice-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem; }
+  .notice-box strong { color: var(--caramel); }
+
+  /* FORM CONTAINER */
+  .form-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 1.5rem 5rem;
+  }
+
+  /* SECTION */
+  .form-section {
+    background: rgba(61,31,13,0.45);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 1.8rem;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .form-section:focus-within {
+    border-color: rgba(201,149,74,0.45);
+  }
+  .section-header {
+    background: rgba(107,58,31,0.5);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+  .section-num {
+    width: 28px;
+    height: 28px;
+    background: var(--gold);
+    color: var(--dark);
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: 'Jost', sans-serif;
+  }
+  .section-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+  }
+  .section-body { padding: 1.6rem; }
+
+  /* FIELDS */
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+  .field-row.triple {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  @media (max-width: 600px) {
+    .field-row, .field-row.triple { grid-template-columns: 1fr; }
+  }
+  .field { margin-bottom: 1.3rem; }
+  .field:last-child { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  label .req { color: var(--gold); margin-left: 3px; }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="time"],
+  select,
+  textarea {
+    width: 100%;
+    background: rgba(26,15,8,0.6);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    color: var(--text-main);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 300;
+    transition: border-color 0.2s, background 0.2s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+  input[type="text"]::placeholder,
+  input[type="email"]::placeholder,
+  input[type="tel"]::placeholder,
+  textarea::placeholder { color: rgba(196,170,144,0.4); }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--border-focus);
+    background: rgba(26,15,8,0.8);
+  }
+  select { cursor: pointer; }
+  select option { background: var(--chocolate); color: var(--text-main); }
+  textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+
+  /* RADIO / CHECKBOX GROUPS */
+  .radio-group, .check-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 0.1rem;
+  }
+  .radio-group label, .check-group label {
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    margin-bottom: 0;
+    padding: 0.55rem 1rem;
+    background: rgba(26,15,8,0.5);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  .radio-group label:hover, .check-group label:hover {
+    border-color: var(--border-focus);
+    background: rgba(107,58,31,0.3);
+  }
+  .radio-group input[type="radio"],
+  .check-group input[type="checkbox"] {
+    width: auto;
+    accent-color: var(--gold);
+    cursor: pointer;
+  }
+
+  /* URGENCY SPECIAL */
+  .urgency-opts { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .urgency-opt { position: relative; }
+  .urgency-opt input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .urgency-opt label {
+    display: flex; flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.9rem 1.3rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    background: rgba(26,15,8,0.5);
+    transition: all 0.2s;
+    min-width: 130px;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+    color: var(--text-main);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  .urgency-opt label .urg-icon { font-size: 1.3rem; }
+  .urgency-opt label .urg-sub { font-size: 0.72rem; color: var(--text-muted); font-weight: 300; }
+  .urgency-opt input:checked + label {
+    border-color: var(--gold);
+    background: rgba(201,149,74,0.12);
+    color: var(--cream);
+  }
+  .urgency-opt.urgent input:checked + label { border-color: var(--error); background: rgba(224,92,58,0.1); }
+
+  /* FILE UPLOAD */
+  .file-drop {
+    border: 2px dashed var(--border);
+    border-radius: 6px;
+    padding: 2.2rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: rgba(26,15,8,0.4);
+    position: relative;
+  }
+  .file-drop:hover, .file-drop.dragover {
+    border-color: var(--border-focus);
+    background: rgba(107,58,31,0.2);
+  }
+  .file-drop input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+  .file-drop-icon { font-size: 2rem; margin-bottom: 0.7rem; opacity: 0.7; }
+  .file-drop p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
+  .file-drop p strong { color: var(--gold); font-weight: 500; }
+  .file-preview { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+  .file-chip {
+    background: rgba(107,58,31,0.5);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.78rem;
+    color: var(--caramel);
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+
+  /* T&C BOX */
+  .tc-box {
+    background: rgba(26,15,8,0.6);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.4rem;
+    margin-bottom: 1.3rem;
+    max-height: 220px;
+    overflow-y: auto;
+    font-size: 0.82rem;
+    line-height: 1.75;
+    color: var(--text-muted);
+    scrollbar-width: thin;
+    scrollbar-color: var(--mid) transparent;
+  }
+  .tc-box h4 {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--caramel);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+  .tc-box h5 {
+    color: var(--caramel);
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin: 1rem 0 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+  .tc-box p { margin-bottom: 0.5rem; }
+
+  .agree-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 1rem 1.2rem;
+    background: rgba(201,149,74,0.06);
+    border: 1px solid rgba(201,149,74,0.2);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .agree-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    accent-color: var(--gold);
+    cursor: pointer;
+  }
+  .agree-row span {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .agree-row span strong { color: var(--caramel); font-weight: 500; }
+
+  /* CALLOUT FEE */
+  .fee-notice {
+    background: rgba(201,149,74,0.07);
+    border: 1px solid rgba(201,149,74,0.25);
+    border-radius: 4px;
+    padding: 1.1rem 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.3rem;
+  }
+  .fee-badge {
+    background: var(--gold);
+    color: var(--dark);
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    padding: 0.4rem 0.9rem;
+    white-space: nowrap;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .fee-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; }
+  .fee-text strong { color: var(--caramel); }
+
+  /* SUBMIT */
+  .submit-area { text-align: center; padding-top: 0.5rem; }
+  .submit-btn {
+    background: linear-gradient(135deg, var(--mid), var(--chocolate));
+    color: var(--cream);
+    border: 1px solid var(--gold);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 1.1rem 3.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .submit-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(201,149,74,0);
+    transition: background 0.25s;
+  }
+  .submit-btn:hover { background: linear-gradient(135deg, var(--warm), var(--mid)); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(201,149,74,0.2); }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.9rem; }
+
+  /* SUCCESS */
+  .success-msg {
+    display: none;
+    background: rgba(61,31,13,0.7);
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    padding: 3rem 2rem;
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .success-msg .big-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .success-msg h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--cream); margin-bottom: 0.8rem; }
+  .success-msg p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; max-width: 400px; margin: 0 auto; }
+
+  /* DIVIDER */
+  .field-divider { border: none; border-top: 1px solid var(--border); margin: 1.3rem 0; }
+
+  /* RESPONSIVE */
+  @media (max-width: 500px) {
+    .site-header { padding: 0 1rem; }
+    .header-badge { display: none; }
+    .section-body { padding: 1.2rem; }
+    .urgency-opts { gap: 0.5rem; }
+    .urgency-opt label { min-width: 100px; padding: 0.75rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">ProManage <span>Property Services</span></div>
+  <div class="header-badge">Maintenance Intake</div>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">Property Maintenance Request</div>
+  <h1>Submit a Maintenance Request</h1>
+  <p>Please complete all fields as thoroughly as possible. The more detail you provide, the faster we can assess and dispatch the right team to your property.</p>
+</div>
+
+<div class="notice">
+  <div class="notice-box">
+    <span class="notice-icon">🕐</span>
+    <div><strong>Response time:</strong> Please allow up to <strong>24 hours</strong> for our team to review your request and get back to you with an assessment and appointment confirmation. Urgent issues are prioritised. For life-threatening emergencies, contact emergency services immediately.</div>
+  </div>
+</div>
+
+<div class="form-wrap">
+  <form id="maintenanceForm" novalidate>
+
+    <!-- SECTION 1: SUBMITTER INFO -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <h2>Contact Information</h2>
+      </div>
+      <div class="section-body">
+        <div class="field-row">
+          <div class="field">
+            <label>Full Name <span class="req">*</span></label>
+            <input type="text" name="submitter_name" placeholder="Your full name" required>
+          </div>
+          <div class="field">
+            <label>Role / Relationship <span class="req">*</span></label>
+            <select name="submitter_role" required>
+              <option value="">— Select —</option>
+              <option>Property Owner</option>
+              <option>Tenant</option>
+              <option>Estate Agent / Property Manager</option>
+              <option>Building Manager</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Email Address <span class="req">*</span></label>
+            <input type="email" name="email" placeholder="you@example.com" required>
+          </div>
+          <div class="field">
+            <label>Phone / WhatsApp <span class="req">*</span></label>
+            <input type="tel" name="phone" placeholder="+353 ...">
+          </div>
+        </div>
+        <div class="field">
+          <label>Company / Agency Name <span style="color:var(--text-muted);font-size:0.7rem;text-transform:none;letter-spacing:0;">(if applicable)</span></label>
+          <input type="text" name="company" placeholder="Agency or company name">
+        </div>
+        <div class="field">
+          <label>Preferred Contact Method <span class="req">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="contact_pref" value="Email"> 📧 Email</label>
+            <label><input type="radio" name="contact_pref" value="Phone"> 📞 Phone</label>
+            <label><input type="radio" name="contact_pref" value="WhatsApp"> 💬 WhatsApp</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: PROPERTY DETAILS -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <h2>Property Details</h2>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label>Full Property Address <span class="req">*</span></label>
+          <input type="text" name="property_address" placeholder="Street address, town, county, Eircode" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Property Type <span class="req">*</span></label>
+            <select name="property_type" required>
+              <option value="">— Select —</option>
+              <option>Apartment</option>
+              <option>House — Terraced</option>
+              <option>House — Semi-Detached</option>
+              <option>House — Detached</option>
+              <option>Commercial Unit</option>
+              <option>Office Space</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Number of Bedrooms</label>
+            <select name="bedrooms">
+              <option value="">— Select —</option>
+              <option>Studio</option>
+              <option>1</option><option>2</option><option>3</option>
+              <option>4</option><option>5+</option>
+              <option>Commercial — N/A</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Any additional location details / access notes</label>
+          <input type="text" name="location_notes" placeholder="e.g. Apartment 4B, second floor, blue door, intercom code 123">
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: ISSUE DETAILS -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <h2>Maintenance Issue</h2>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label>Category of Issue <span class="req">*</span></label>
+          <select name="issue_category" required>
+            <option value="">— Select the best match —</option>
+            <optgroup label="Plumbing">
+              <option>Plumbing — Leak / Burst Pipe</option>
+              <option>Plumbing — Blocked Drain / Toilet</option>
+              <option>Plumbing — No Hot Water / Boiler</option>
+              <option>Plumbing — Other</option>
+            </optgroup>
+            <optgroup label="Electrical">
+              <option>Electrical — No Power / Tripped Fuse</option>
+              <option>Electrical — Faulty Sockets / Switches</option>
+              <option>Electrical — Lighting Issue</option>
+              <option>Electrical — Other</option>
+            </optgroup>
+            <optgroup label="Heating & Cooling">
+              <option>Heating — No Heat</option>
+              <option>Heating — Radiator Issue</option>
+              <option>Air Conditioning</option>
+            </optgroup>
+            <optgroup label="Structural / Building">
+              <option>Structural — Roof / Ceiling Leak</option>
+              <option>Structural — Damp / Mould</option>
+              <option>Structural — Cracking / Subsidence</option>
+              <option>Windows / Doors — Broken / Faulty</option>
+              <option>Flooring</option>
+              <option>Paintwork / Decorating</option>
+            </optgroup>
+            <optgroup label="Security / Access">
+              <option>Lock / Key Issue</option>
+              <option>Alarm / Security System</option>
+              <option>CCTV</option>
+            </optgroup>
+            <optgroup label="Other">
+              <option>Pest Control</option>
+              <option>Garden / Outdoor Area</option>
+              <option>Appliance Repair</option>
+              <option>Cleaning</option>
+              <option>Other — Please describe below</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Brief Summary of the Problem <span class="req">*</span></label>
+          <input type="text" name="issue_summary" placeholder="e.g. Bathroom tap dripping constantly, causing water damage under sink" required>
+        </div>
+
+        <div class="field">
+          <label>Detailed Description <span class="req">*</span></label>
+          <textarea name="issue_detail" rows="5" placeholder="Please describe the issue in as much detail as possible — when did it start, how severe is it, has it happened before, has anything been tried to fix it, any relevant history..." required></textarea>
+        </div>
+
+        <div class="field">
+          <label>Urgency Level <span class="req">*</span></label>
+          <div class="urgency-opts">
+            <div class="urgency-opt urgent">
+              <input type="radio" name="urgency" id="u1" value="Emergency" required>
+              <label for="u1"><span class="urg-icon">🚨</span> Emergency<span class="urg-sub">Immediate risk to safety or major damage</span></label>
+            </div>
+            <div class="urgency-opt">
+              <input type="radio" name="urgency" id="u2" value="Urgent">
+              <label for="u2"><span class="urg-icon">⚡</span> Urgent<span class="urg-sub">Needs attention within 24–48 hrs</span></label>
+            </div>
+            <div class="urgency-opt">
+              <input type="radio" name="urgency" id="u3" value="Standard">
+              <label for="u3"><span class="urg-icon">🔧</span> Standard<span class="urg-sub">Can be scheduled within the week</span></label>
+            </div>
+            <div class="urgency-opt">
+              <input type="radio" name="urgency" id="u4" value="Routine">
+              <label for="u4"><span class="urg-icon">📋</span> Routine<span class="urg-sub">Planned maintenance, no rush</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>When did this issue first occur? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="issue_start" value="Today"> Today</label>
+            <label><input type="radio" name="issue_start" value="Within past week"> Within past week</label>
+            <label><input type="radio" name="issue_start" value="1–4 weeks ago"> 1–4 weeks ago</label>
+            <label><input type="radio" name="issue_start" value="Over a month ago"> Over a month ago</label>
+            <label><input type="radio" name="issue_start" value="Recurring issue"> Recurring / ongoing</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Has this issue occurred before?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="recurring" value="No — first time"> No, first time</label>
+            <label><input type="radio" name="recurring" value="Yes — same issue"> Yes, same issue</label>
+            <label><input type="radio" name="recurring" value="Yes — previously repaired"> Yes, previously repaired</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: ACCESS -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <h2>Access &amp; Scheduling</h2>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label>Is someone present at the property? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="someone_present" value="Yes — tenant / owner on site"> ✅ Yes — tenant / owner on site</label>
+            <label><input type="radio" name="someone_present" value="No — vacant property"> 🚪 No — property is vacant</label>
+            <label><input type="radio" name="someone_present" value="Available on request"> 🔔 Available on request</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>How will access be provided? <span class="req">*</span></label>
+          <select name="access_type" required>
+            <option value="">— Select —</option>
+            <option>Someone will be present to let in</option>
+            <option>Keys to be collected from our office / agent</option>
+            <option>Keys left at the property (locked box / neighbour)</option>
+            <option>Key safe — code will be provided</option>
+            <option>To be arranged upon booking confirmation</option>
+          </select>
+        </div>
+
+        <div class="field" id="key_collection_field">
+          <label>Key Collection Details <span style="color:var(--text-muted);font-size:0.7rem;text-transform:none;letter-spacing:0;">(if applicable)</span></label>
+          <input type="text" name="key_collection" placeholder="e.g. Keys with reception at 14 Main St, Dublin 2 — ask for Sarah. Available Mon–Fri 9am–5pm.">
+        </div>
+
+        <div class="field">
+          <label>Access Restrictions or Special Instructions</label>
+          <textarea name="access_notes" rows="3" placeholder="e.g. Ring bell twice, parking on left side only, dogs on premises, elderly resident — please be considerate, alarm code will be provided on arrival..."></textarea>
+        </div>
+
+        <hr class="field-divider">
+
+        <div class="field">
+          <label>Preferred Visit Date <span class="req">*</span></label>
+          <input type="date" name="preferred_date" required>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Preferred Time Slot <span class="req">*</span></label>
+            <select name="preferred_time_slot" required>
+              <option value="">— Select —</option>
+              <option>Morning (8:00 – 12:00)</option>
+              <option>Afternoon (12:00 – 17:00)</option>
+              <option>Late Afternoon (15:00 – 18:00)</option>
+              <option>Flexible — any time</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Alternate / Back-up Date</label>
+            <input type="date" name="alt_date">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Days Available <span style="color:var(--text-muted);font-size:0.7rem;text-transform:none;letter-spacing:0;">(tick all that apply)</span></label>
+          <div class="check-group">
+            <label><input type="checkbox" name="days[]" value="Mon"> Mon</label>
+            <label><input type="checkbox" name="days[]" value="Tue"> Tue</label>
+            <label><input type="checkbox" name="days[]" value="Wed"> Wed</label>
+            <label><input type="checkbox" name="days[]" value="Thu"> Thu</label>
+            <label><input type="checkbox" name="days[]" value="Fri"> Fri</label>
+            <label><input type="checkbox" name="days[]" value="Sat"> Sat</label>
+            <label><input type="checkbox" name="days[]" value="Sun"> Sun</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: PHOTOS -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <h2>Photos &amp; Supporting Files</h2>
+      </div>
+      <div class="section-body">
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.1rem;line-height:1.6;">Images help our team assess the issue accurately before arrival, reducing visit time and unnecessary call-outs. Please attach as many relevant photos as possible.</p>
+        <div class="file-drop" id="fileDrop">
+          <input type="file" name="images" accept="image/*,video/*,.pdf" multiple id="fileInput">
+          <div class="file-drop-icon">📎</div>
+          <p><strong>Click to browse or drag &amp; drop files here</strong><br>Images, videos or PDFs — max 10 files, 20MB each</p>
+          <div class="file-preview" id="filePreview"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 6: ADDITIONAL -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <h2>Additional Information</h2>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label>Budget Indication <span style="color:var(--text-muted);font-size:0.7rem;text-transform:none;letter-spacing:0;">(optional)</span></label>
+          <select name="budget">
+            <option value="">— Select if known —</option>
+            <option>Under €150</option>
+            <option>€150 – €300</option>
+            <option>€300 – €600</option>
+            <option>€600 – €1,000</option>
+            <option>Over €1,000</option>
+            <option>No budget limit — just get it fixed</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Insurance / Warranty Claim?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="insurance" value="No"> No</label>
+            <label><input type="radio" name="insurance" value="Yes — home insurance"> Yes — home insurance</label>
+            <label><input type="radio" name="insurance" value="Yes — landlord insurance"> Yes — landlord insurance</label>
+            <label><input type="radio" name="insurance" value="Yes — warranty claim"> Yes — warranty claim</label>
+            <label><input type="radio" name="insurance" value="Unsure"> Unsure</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Any additional notes for the team</label>
+          <textarea name="extra_notes" rows="3" placeholder="Anything else our team should know before attending — parking, pets, sensitive areas, specific requests, materials preferences..."></textarea>
+        </div>
+        <div class="field">
+          <label>How did you hear about us?</label>
+          <select name="referral">
+            <option value="">— Select —</option>
+            <option>Referred by estate agent</option>
+            <option>Word of mouth / friend</option>
+            <option>Google Search</option>
+            <option>Social media</option>
+            <option>Returning client</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 7: TERMS -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <h2>Call-Out Fee &amp; Terms &amp; Conditions</h2>
+      </div>
+      <div class="section-body">
+        <div class="fee-notice">
+          <div class="fee-badge">€35</div>
+          <div class="fee-text"><strong>Call-Out Fee applies to all initial visits.</strong> This fee covers assessment, travel, and preliminary inspection. It will be <strong>fully deducted</strong> from the total cost of works if you confirm and proceed with the job. The call-out fee is non-refundable if you choose not to proceed following our assessment.</div>
+        </div>
+
+        <div class="tc-box">
+          <h4>Terms &amp; Conditions — Property Maintenance Services</h4>
+          <p>These Terms &amp; Conditions govern the provision of property maintenance services. By submitting this form, you confirm you have read, understood, and agreed to the following terms.</p>
+
+          <h5>1. Call-Out Fee</h5>
+          <p>A non-refundable call-out fee of €35 applies to all initial site visits. This fee will be deducted in full from the final invoice if the client confirms and proceeds with the recommended works. The fee is payable prior to or upon the technician's visit. Failure to be present or provide access at the agreed time without 24 hours' notice will result in forfeiture of the fee and a new call-out charge for rescheduled visits.</p>
+
+          <h5>2. Quotations &amp; Estimates</h5>
+          <p>Following the initial assessment, we will provide a written quotation or estimate. Works will not commence until written approval is received from the client or authorised agent. Estimates are indicative only; final costs may vary subject to materials, unforeseen conditions, or scope changes discovered on site.</p>
+
+          <h5>3. Response &amp; Scheduling</h5>
+          <p>Please allow up to 24 working hours for our team to acknowledge your request and contact you with availability. Emergency requests are prioritised. Scheduling is subject to technician availability. Confirmed appointments will be communicated by email or the preferred contact method you indicate on this form.</p>
+
+          <h5>4. Access &amp; Site Conditions</h5>
+          <p>The client is responsible for ensuring safe and adequate access to the property at the agreed time. Our team reserves the right to refuse to commence works if site conditions are deemed unsafe. Any delays caused by lack of access or incomplete information provided at time of booking may result in additional charges.</p>
+
+          <h5>5. Liability</h5>
+          <p>Our team carries full public liability insurance. We are not liable for pre-existing damage, structural defects, or issues unrelated to the agreed scope of works. Clients are responsible for removing or protecting personal items in the work area prior to the technician's visit. We are not liable for damage to property arising from failure to do so.</p>
+
+          <h5>6. Payment Terms</h5>
+          <p>Full payment is due upon completion of works unless otherwise agreed in writing. We accept bank transfer, cash, and card payment. Overdue invoices beyond 14 days may be subject to a late payment charge of 2% per month on the outstanding balance.</p>
+
+          <h5>7. Cancellations &amp; Rescheduling</h5>
+          <p>Cancellations or rescheduling requests must be made at least 24 hours in advance. Cancellations with less than 24 hours notice will result in forfeiture of the call-out fee. We reserve the right to reschedule appointments in the event of unforeseen circumstances, including emergency jobs, illness, or adverse weather.</p>
+
+          <h5>8. Data &amp; Privacy</h5>
+          <p>The personal data provided on this form will be used solely for the purpose of processing your maintenance request, scheduling visits, and maintaining service records. Your information will not be shared with third parties except where necessary to fulfil the works (e.g. specialist subcontractors). Data is held securely in line with GDPR regulations.</p>
+
+          <h5>9. Warranties on Workmanship</h5>
+          <p>We provide a 30-day workmanship warranty on all completed works. Manufacturer warranties apply separately to any parts or materials supplied. Warranty is void if works are tampered with, modified, or impacted by misuse following completion.</p>
+
+          <h5>10. Governing Law</h5>
+          <p>These terms are governed by the laws of the Republic of Ireland. Any disputes shall be subject to the exclusive jurisdiction of the Irish courts.</p>
+        </div>
+
+        <div class="agree-row" style="margin-bottom:0.9rem">
+          <input type="checkbox" id="agree_tc" name="agree_tc" required>
+          <label for="agree_tc" style="all:unset;cursor:pointer;">
+            <span>I confirm I have read and agree to the <strong>Terms &amp; Conditions</strong> above, including the <strong>€35 call-out fee</strong> which is non-refundable if I choose not to proceed with the works following assessment. <span class="req" style="color:var(--gold);">*</span></span>
+          </label>
+        </div>
+
+        <div class="agree-row" style="margin-bottom:0.9rem">
+          <input type="checkbox" id="agree_fee" name="agree_fee" required>
+          <label for="agree_fee" style="all:unset;cursor:pointer;">
+            <span>I understand the <strong>€35 call-out fee will be deducted from the total job cost</strong> if I confirm and proceed with the work. <span class="req" style="color:var(--gold);">*</span></span>
+          </label>
+        </div>
+
+        <div class="agree-row">
+          <input type="checkbox" id="agree_response" name="agree_response" required>
+          <label for="agree_response" style="all:unset;cursor:pointer;">
+            <span>I understand that the team will respond within <strong>24 hours</strong> during working hours and that submission of this form does not constitute a confirmed appointment. <span class="req" style="color:var(--gold);">*</span></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-area">
+      <button type="submit" class="submit-btn">Submit Maintenance Request</button>
+      <p class="submit-sub">A copy of your submission will be sent to your email address. Our team will be in touch within 24 hours.</p>
+    </div>
+
+  </form>
+
+  <!-- SUCCESS -->
+  <div class="success-msg" id="successMsg">
+    <div class="big-icon">✅</div>
+    <h3>Request Received</h3>
+    <p>Thank you — your maintenance request has been submitted successfully. Our team will review the details and contact you within <strong>24 hours</strong> to confirm scheduling and next steps.<br><br>A copy has been sent to your email address.</p>
+  </div>
+
+</div>
+
+<script>
+  // File upload preview
+  const fileInput = document.getElementById('fileInput');
+  const filePreview = document.getElementById('filePreview');
+  const fileDrop = document.getElementById('fileDrop');
+
+  fileInput.addEventListener('change', updatePreview);
+
+  fileDrop.addEventListener('dragover', e => { e.preventDefault(); fileDrop.classList.add('dragover'); });
+  fileDrop.addEventListener('dragleave', () => fileDrop.classList.remove('dragover'));
+  fileDrop.addEventListener('drop', e => {
+    e.preventDefault();
+    fileDrop.classList.remove('dragover');
+    fileInput.files = e.dataTransfer.files;
+    updatePreview();
+  });
+
+  function updatePreview() {
+    filePreview.innerHTML = '';
+    Array.from(fileInput.files).forEach(f => {
+      const chip = document.createElement('div');
+      chip.className = 'file-chip';
+      chip.innerHTML = `📄 ${f.name.length > 20 ? f.name.substring(0,18)+'…' : f.name}`;
+      filePreview.appendChild(chip);
+    });
+  }
+
+  // Set min date to today
+  const today = new Date().toISOString().split('T')[0];
+  document.querySelector('[name="preferred_date"]').min = today;
+  document.querySelector('[name="alt_date"]').min = today;
+
+  // Form submit
+  document.getElementById('maintenanceForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const required = this.querySelectorAll('[required]');
+    let valid = true;
+    required.forEach(el => {
+      if (el.type === 'checkbox' && !el.checked) valid = false;
+      else if (el.type === 'radio') {
+        const group = this.querySelectorAll(`[name="${el.name}"]`);
+        if (![...group].some(r => r.checked)) valid = false;
+      } else if (!el.value.trim()) valid = false;
+    });
+    if (!valid) {
+      alert('Please complete all required fields (marked with *) before submitting.');
+      return;
+    }
+    this.style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+    window.scrollTo({ top: document.getElementById('successMsg').offsetTop - 80, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
